@@ -6,7 +6,19 @@ public class SimpleDotComTestDrive {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		SimpleDotCom dot = new SimpleDotCom();
+		int [] locations = {2,3,4};
+		
+		String userGuess = "2";
+		String result = dot.checkYourself(userGuess);
+		String testResult = "failed";
+		
+		if (result.equals("hit")) {
+			testResult = "passed";
+		}
+		
+		System.out.println(testResult);
+		assertEquals("passed", testResult);
 	}
 
 }
