@@ -1,8 +1,23 @@
 import java.util.ArrayList;
 
 public class DotCom {
+	private String name;
 	private ArrayList<String> locationCells;
 	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	void setLocationCells(ArrayList<String> locs){
 		locationCells = locs;
 	}
