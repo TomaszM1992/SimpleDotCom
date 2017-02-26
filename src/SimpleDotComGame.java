@@ -21,6 +21,7 @@ public class SimpleDotComGame {
 		while (isAlive) {
 			String guess = helper.getUserInput("enter a number");
 			String result = theDotCom.checkYourself(guess);
+			System.out.println(result);
 			numOfGuesses++;
 			
 			if (result.equals("kill")) {
