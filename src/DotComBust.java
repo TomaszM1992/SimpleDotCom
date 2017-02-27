@@ -2,71 +2,70 @@ import java.util.ArrayList;
 
 public class DotComBust {
 
-	int numOfGuesses = 0;		
-	GameHelper helper = new GameHelper();
-	ArrayList<DotCom> dotComList = new ArrayList<>();
+	private int numOfGuesses = 0;		
+	private GameHelper helper = new GameHelper();
+	private ArrayList<DotCom> dotComList = new ArrayList<DotCom>();
 	
-	void setUpGame (){
-		DotCom dotCom1 = new DotCom();
-		dotCom1.setName("dot1.com");
-		DotCom dotCom2 = new DotCom();
-		dotCom2.setName("dot2.com");
-		DotCom dotCom3 = new DotCom();
-		dotCom3.setName("dot3.com");
+	
+	private void setUpGame (){
+		DotCom one = new DotCom();
+		one.setName("Pets.com");
+		DotCom two = new DotCom();
+		two.setName("eToys.com");
+		DotCom three = new DotCom();
+		three.setName("Go2.com");
 		
-		dotComList.add(dotCom1);
-		dotComList.add(dotCom2);
-		dotComList.add(dotCom3);
+		dotComList.add(one);
+		dotComList.add(two);
+		dotComList.add(three);
 		
-		for (DotCom dotCom : dotComList) {
-			dotCom.setLocationCells(helper.placeDotCom());
+		System.out.println("Your goal is to sink three dot coms. ");
+		System.out.println("Pets.com, eToys.com and Go2.com");
+		System.out.println("Try to sink them all in the fewest number of guesses");
+				
+		for (DotCom dotComToSet : dotComList) {
+			ArrayList<String> newLocation = helper.placeDotCom(3);
+			dotComToSet.setLocationCells(newLocation);
 		}
 	}
 	
-	void startPlaying (){
+	private void startPlaying (){
 		while (!dotComList.isEmpty()) {
-			helper.getUserInput("Enter target");
-			helper.checkUserGuess();
+			String userGuess = helper.getUserInput("Enter target");
+			checkUserGuess(userGuess);
 		}
+		finishGame();
 	}
 	
-	String checkUserGeuss(){
-		return "miss";
-	}
-	
-	int finishGame(){
-		return numOfGuesses;
-	}
-	
-	/*
-	public static void main(String[] args) {
-		int numOfGuesses = 0;		
-		GameHelper helper = new GameHelper();
-		ArrayList<DotCom> dotComList = new ArrayList<>();
+	void checkUserGuess(String uGuess){
+		numOfGuesses++;
+		String result = "miss";
 		
-		DotCom theDotCom = new DotCom();
-		int randomNum = (int) (Math.random()*5);
-		Integer intran = new Integer(randomNum);
-		Integer intran2 = new Integer(randomNum+1);
-		Integer intran3 = new Integer(randomNum+2);
-		ArrayList <String> locations = new ArrayList<>();
-		locations.add(intran.toString());
-		locations.add(intran2.toString());
-		locations.add(intran3.toString());
-		theDotCom.setLocationCells(locations);
-		boolean isAlive = true;
-		
-		while (isAlive) {
-			String guess = helper.getUserInput("enter a number");
-			String result = theDotCom.checkYourself(guess);
-			System.out.println(result);
-			numOfGuesses++;
-			
+		for (DotCom dotComToTest : dotComList) {
+			result = dotComToTest.checkYourself(uGuess);
+			if (result.equals("hit")) {
+				break;
+			}
 			if (result.equals("kill")) {
-				isAlive = false;
-				System.out.println("You took " + numOfGuesses + " guesses");
+				dotComList.remove(dotComToTest);
+				break;
 			}
 		}
+		System.out.println(result);
 	}
-	*/
+	
+	void finishGame(){
+		System.out.println("All Dot Coms are dead! Your stock is now worthless. ");
+		if (numOfGuesses<=18) {
+			System.out.println("Congrats!");
+		} else {
+			System.out.println("Took you long enough you weak creature");
+		}
+	}
+	
+	public static void main(String[] args) {
+		DotComBust game = new DotComBust();
+		game.setUpGame();
+		game.startPlaying();
+	}	
 }
